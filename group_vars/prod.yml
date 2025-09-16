@@ -1,0 +1,6 @@
+---
+ansible_user: admin                # nom de l'utilisateur SSH
+ansible_password: "Musique,1234"   # mot de passe SSH (si utilisé)
+ansible_become_password: "Musique,1234"
+ansible_python_interpreter: /usr/bin/python3
+
