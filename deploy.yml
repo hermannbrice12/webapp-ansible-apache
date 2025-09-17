@@ -2,27 +2,23 @@
 - name: Déployer Apache dans un conteneur Docker
   hosts: prod
   become: true
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
 
   pre_tasks:
-    - name: Installer EPEL sur CentOS
+    - name: Installer le dépôt EPEL
       package:
-        name: epel-release
+        name: "{{ item }}"
         state: present
-      when: ansible_distribution == "CentOS"
-  
-    - name: installer curl
-      yum:
-        name: curl
-        state: present
-    
-    - name: installer docker avec le script
+      loop:
+        - epel-release
+        - wget
+        - curl
+
+    - name: Installer Docker via script officiel
       shell: curl -fsSL https://get.docker.com | sh
       args:
         warn: false
 
-    - name: Installer Python3, pip3
+    - name: Installer Python3 et pip3
       package:
         name:
           - python3
@@ -35,11 +31,20 @@
         state: started
         enabled: yes
 
-    - name: Lancer le conteneur Apache
+  tasks:
+    - name: Copier le fichier index.html depuis template
+      template:
+        src: index.html.j2
+        dest: /home/admin/index.html
+
+    - name: Créer le conteneur Apache avec volume monté
       community.docker.docker_container:
         name: webapp
-        image: httpd:latest
+        image: httpd
+        ports:
+          - "81:80"
+        volumes:
+          - /home/admin/index.html:/usr/local/apache2/htdocs/index.html
         state: started
         restart_policy: always
-        ports:
-          - "80:80"
+
