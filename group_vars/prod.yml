@@ -1,6 +1,5 @@
 ---
 ansible_user: admin                # nom de l'utilisateur SSH
-ansible_password: "admin"   # mot de passe SSH (si utilisé)
-ansible_become_password: "admin"
+ansible_become_password: "{{vault_ansible_password}}"
+ansible_password: "{{vault_ansible_password}}"
 ansible_python_interpreter: /usr/bin/python3
-

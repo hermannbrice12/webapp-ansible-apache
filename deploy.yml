@@ -2,6 +2,9 @@
 - name: Déployer Apache dans un conteneur Docker
   hosts: prod
   become: true
+  vars_files:
+    - files/secrets/credentials.yml
+    
 
   pre_tasks:
     - name: Installer le dépôt EPEL
