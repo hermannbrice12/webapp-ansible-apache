@@ -41,13 +41,13 @@
         dest: /home/admin/index.html
 
    - name: Créer le conteneur Apache
-      docker_container:
-        name: webapp
-        image: httpd
-        ports:
-          - "80:80"
-        volumes:
-          - "/home/admin/index.html:/usr/local/apache2/htdocs/index.html"
-        state: started
-        restart_policy: always
+     docker_container:
+       name: webapp
+       image: httpd
+       ports:
+         - "80:80"
+       volumes:
+         - "/home/admin/index.html:/usr/local/apache2/htdocs/index.html"
+       state: started
+       restart_policy: always
 
