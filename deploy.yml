@@ -40,14 +40,14 @@
         src: index.html.j2
         dest: /home/admin/index.html
 
-    - name: Créer le conteneur Apache avec volume monté
-      community.docker.docker_container:
+   - name: Créer le conteneur Apache
+      docker_container:
         name: webapp
         image: httpd
         ports:
-          - "81:80"
+          - "80:80"
         volumes:
-          - /home/admin/index.html:/usr/local/apache2/htdocs/index.html
+          - "/home/admin/index.html:/usr/local/apache2/htdocs/index.html"
         state: started
         restart_policy: always
 
