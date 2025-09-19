@@ -41,7 +41,7 @@
         dest: /home/admin/index.html
 
    - name: Créer le conteneur Apache
-     docker_container:
+     community.docker.docker_container:
        name: webapp
        image: httpd
        ports:
